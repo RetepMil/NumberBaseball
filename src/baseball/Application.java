@@ -10,5 +10,6 @@ public class Application {
             willContinue = InputController.askIfContinue();
         }
         System.out.println("게임이 완전히 종료되었습니다.");
+        //for comm
     }
 }
