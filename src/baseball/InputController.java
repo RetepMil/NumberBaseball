@@ -16,7 +16,11 @@ public class InputController {
             shouldContinue = true;
         }
 
-        if (input != 2) {
+        if (input == 2) {
+            shouldContinue = false;
+        }
+
+        if (input != 1 && input != 2) {
             throw new IllegalArgumentException();
         }
 

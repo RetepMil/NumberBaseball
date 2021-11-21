@@ -10,7 +10,7 @@ public class Game {
 
     public Game() {
         for (int i = 0; i < 3; i++) {
-            int num = RandomUtils.nextInt(0, 10);
+            int num = RandomUtils.nextInt(0, 9);
             this.targetNumbers.add(num);
             if (this.targetNumbers.stream().distinct().count() == i) {
                 i--;
@@ -20,6 +20,7 @@ public class Game {
     }
 
     public void startGame() {
+        //System.out.println(this.targetNumbers.get(0) + " " + this.targetNumbers.get(1) + " " + this.targetNumbers.get(2));
         //Repeat asking process
         while (checkGuesses(askForGuesses()));
         //Exit when winning condition is met
@@ -32,7 +33,7 @@ public class Game {
             try {
                 guesses.add(InputController.getGuessInput());
             } catch (IllegalArgumentException e) {
-                System.out.print("비정상적 입력 감지");
+                System.out.print("비정상적인 입력");
             } catch (Exception e) {
                 System.out.print(e.getMessage());
             }
@@ -46,21 +47,25 @@ public class Game {
 
         for (int i = 0; i < 3; i++) {
             int guess = guesses.get(i);
-            if (guess == this.targetNumbers.get(i))
+            if (guess == this.targetNumbers.get(i)) {
                 strike++;
-            if (this.targetNumbers.stream().filter(n -> n == guess).count() == 1)
+            } else if (this.targetNumbers.stream().filter(n -> n == guess).count() == 1) {
                 ball++;
+            }
         }
 
         //Check for winning Condition
-        if (strike == 3)
+        if (strike == 3) {
             return false;
+        }
 
         //Give feedback
-        if (ball > 0)
+        if (ball > 0) {
             System.out.print(ball + "볼 ");
-        if (strike > 0)
-            System.out.print(ball + "볼 ");
+        }
+        if (strike > 0) {
+            System.out.print(strike + "스트라이크 ");
+        }
         System.out.println("");
 
         return true;
