@@ -1,6 +1,5 @@
 package baseball;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputController {

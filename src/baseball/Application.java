@@ -6,11 +6,9 @@ public class Application {
         while(willContinue) {
             Game game = new Game();
             game.startGame();
-
-            System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-            System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
+            //game = null 해줘야 하나요?
             willContinue = InputController.askIfContinue();
         }
-        System.out.println("게임이 종료되었습니다.");
+        System.out.println("게임이 완전히 종료되었습니다.");
     }
 }
