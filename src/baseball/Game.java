@@ -17,18 +17,14 @@ public class Game {
         do {
             askForGuesses();
         } while (!gameState.isWin());
-
-        //Exit when winning condition is met
-        System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
-        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
     }
 
     private void askForGuesses() {
         ArrayList<Integer> guessHistory = new ArrayList<Integer>(); //for duplicate checking
-        System.out.print("숫자를 입력해주세요: ");
+        System.out.print("숫자를 입력해주세요 (1~9 범위의 숫자 3개): ");
         for (int i = 0; i < 3; i++) {
             try {
-                int guess = UserInputController.askInteger(1, 9, guessHistory);
+                int guess = UserInputController.askUniqueInteger(1, 9, guessHistory);
                 guessHistory.add(guess);
                 gameState.newGuess(guess, i);
             } catch (IllegalArgumentException e) {

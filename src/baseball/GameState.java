@@ -19,7 +19,26 @@ public class GameState {
         }
     }
 
-    public void newGuess(int guess, int order) {
+    private void printHint() {
+        if (ball > 0) {
+            System.out.print(ball + "볼 ");
+        }
+        if (strike > 0) {
+            System.out.print(strike + "스트라이크 ");
+        }
+        System.out.println();
+    }
+
+    private void resetBallStrikeStates() {
+        this.strike = 0;
+        this.ball = 0;
+    }
+
+    public void newGuess(int guess, int order) throws Exception {
+        if (order > 3) {
+            throw new Exception("More than three inputs were given");
+        }
+
         if (guess == this.targetNumbers.get(order)) { //Check for strike condition
             this.strike++;
         } else if (this.targetNumbers.stream().filter(n -> n == guess).count() == 1) { //Check for ball condition
@@ -36,20 +55,5 @@ public class GameState {
         printHint();
         resetBallStrikeStates();
         return false;
-    }
-
-    private void printHint() {
-        if (ball > 0) {
-            System.out.print(ball + "볼 ");
-        }
-        if (strike > 0) {
-            System.out.print(strike + "스트라이크 ");
-        }
-        System.out.println();
-    }
-
-    private void resetBallStrikeStates() {
-        this.strike = 0;
-        this.ball = 0;
     }
 }

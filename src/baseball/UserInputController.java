@@ -27,7 +27,7 @@ public class UserInputController {
         return shouldContinue;
     }
 
-    public static int askInteger(int inclusive_lb, int inclusive_ub, ArrayList<Integer> arr) throws Exception {
+    public static int askUniqueInteger(int inclusive_lb, int inclusive_ub, ArrayList<Integer> history) throws Exception {
         int input = SCANNER.nextInt();
 
         if (input > inclusive_ub) {
@@ -38,7 +38,7 @@ public class UserInputController {
             throw new IllegalArgumentException();
         }
 
-        if (arr.stream().filter(a -> a == input).count() != 0) {
+        if (history.stream().filter(a -> a == input).count() != 0) {
             throw new IllegalArgumentException();
         }
 
