@@ -6,9 +6,9 @@ import utils.UserInputController;
 import java.util.ArrayList;
 
 public class Game {
-    private final UserInputController userInputController;
-    private final int size;
-    private final ArrayList<Integer> targetNumbers;
+    final private UserInputController userInputController;
+    final private int size;
+    final private ArrayList<Integer> targetNumbers;
 
     public Game() {
         final int size = 3;
@@ -26,7 +26,7 @@ public class Game {
     private ArrayList<Integer> initializeTargetNumbers(int size) {
         ArrayList<Integer> numArr = new ArrayList<Integer>();
         for (int i = 0; i < size; i++) {
-            int num = RandomUtils.nextInt(1, 9);
+            final int num = RandomUtils.nextInt(1, 9);
             numArr.add(num);
             if (numArr.stream().distinct().count() == i) { // 중복된 숫자 선택 방지
                 numArr.remove(i--);
@@ -38,9 +38,8 @@ public class Game {
     private ScoreData calculateScore(ArrayList<Integer> guesses) {
         ScoreData scoreData = new ScoreData(0, 0);
         for (int i = 0; i < this.size; i++) {
-            int currentPlaceGuess = guesses.get(i);
-            int currentPlaceTargetNumber = this.targetNumbers.get(i);
-
+            final int currentPlaceGuess = guesses.get(i);
+            final int currentPlaceTargetNumber = this.targetNumbers.get(i);
             if (currentPlaceGuess == currentPlaceTargetNumber) {
                 scoreData.setStrike(scoreData.getStrike() + 1);
                 continue;
