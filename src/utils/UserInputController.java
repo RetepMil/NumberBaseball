@@ -10,6 +10,23 @@ public class UserInputController {
 
     public UserInputController(){}
 
+    private int askForUserNumberInput() {
+        String input = SCANNER.nextLine();
+        int inputNaturalNumber = -1;
+
+        try {
+            inputNaturalNumber = Integer.parseInt(input);
+        }
+        catch (IllegalArgumentException e) {
+            System.err.println("비정상적인 입력");
+        }
+        catch (Exception e) {
+            System.err.println("비식별 에러 발생");
+        }
+
+        return inputNaturalNumber;
+    }
+
     public boolean askIntergetToBoolean(int yes_int, int no_int) {
         boolean boolVariable = false;
         int input = SCANNER.nextInt();
@@ -47,14 +64,13 @@ public class UserInputController {
         return input;
     }
 
-    public ScoreData getUserInput(ScoreData scoreData, int size) {
+    public ArrayList<Integer> getUserInput(int size) {
         ArrayList<Integer> guessHistory = new ArrayList<Integer>(); //for duplicate checking
         System.out.print("숫자를 입력해주세요 (1~9 범위의 숫자"+ size + "개): ");
         for (int i = 0; i < size; i++) {
             try {
-                int guess = UserInputController.askUniqueInteger(1, 9, guessHistory);
+                int guess = askUniqueInteger(1, 9, guessHistory);
                 guessHistory.add(guess);
-                calculateScore(guess, i, scoreData);
             } catch (IllegalArgumentException e) {
                 System.out.print("비정상적인 입력");
                 System.exit(0);
@@ -63,6 +79,6 @@ public class UserInputController {
                 System.exit(0);
             }
         }
-        return scoreData;
+        return guessHistory;
     }
 }
