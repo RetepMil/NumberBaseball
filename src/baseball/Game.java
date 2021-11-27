@@ -18,16 +18,20 @@ public class Game {
     }
 
     public void startGame() {
-        do {
-            gameProcess();
-        } while (this.userInputController.askIntergetToBoolean(1, 2));
-        System.out.println("게임이 완전히 종료되었습니다.");
+        try {
+            do {
+                gameProcess();
+            } while (this.userInputController.askUserRestartGame(1, 2));
+            System.out.println("게임이 완전히 종료되었습니다.");
+        } catch (IllegalArgumentException e) {
+            System.exit(0);
+        }
     }
 
     private void gameProcess() {
         boolean willContinue = true;
         while (willContinue) {
-            ArrayList<Integer> userInputs = userInputController.getUserInput(this.size);
+            ArrayList<Integer> userInputs = userInputController.askUserGuessInput(this.size);
             ScoreData scoreData = calculateScore(userInputs);
             System.out.println(scoreData.getHintString());
             willContinue = !scoreData.isWin(this.size);
