@@ -1,29 +1,41 @@
 package baseball;
 
-import baseball.DTO.ScoreData;
-import baseball.DTO.TargetNumber;
+import utils.RandomUtils;
 import utils.UserInputController;
 
 import java.util.ArrayList;
 
 public class Game {
     private final UserInputController userInputController;
-    private final TargetNumber targetNumbers;
+    private final ArrayList<Integer> targetNumbers;
     private final int size;
 
     public Game() {
         this.userInputController = new UserInputController();
-        this.targetNumbers = new TargetNumber();
+        this.targetNumbers = initializeTargetNumbers();
         this.size = 3;
+    }
+
+    private ArrayList<Integer> initializeTargetNumbers() {
+        ArrayList<Integer> numArr = new ArrayList<Integer>();
+        for (int i = 0; i < 3; i++) {
+            int num = RandomUtils.nextInt(1, 9);
+            this.targetNumbers.add(num);
+            if (this.targetNumbers.stream().distinct().count() == i) { // 중복된 숫자 선택 방지
+                this.targetNumbers.remove(i--);
+            }
+        }
+        return numArr;
     }
 
     public void startGame() {
         try {
             do {
                 gameProcess();
-            } while (this.userInputController.askUserRestartGame(1, 2));
+            } while (this.userInputController.askUserRestartGame());
             System.out.println("게임이 완전히 종료되었습니다.");
         } catch (IllegalArgumentException e) {
+            System.err.println("비정상적인 입력");
             System.exit(0);
         }
     }
@@ -41,17 +53,17 @@ public class Game {
         System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
     }
 
-    private ScoreData calculateScore(ArrayList<Integer> userInputs) {
+    private ScoreData calculateScore(ArrayList<Integer> guesses) {
         ScoreData scoreData = new ScoreData(0, 0);
         for (int i = 0; i < this.size; i++) {
-            final int currentPlaceAnswer = this.targetNumbers.getTargetNumber(i);
-            if (userInputs.get(i) == currentPlaceAnswer) {
+            int currentPlaceGuess = guesses.get(i);
+            int currentPlaceTargetNumber = this.targetNumbers.get(i);
+
+            if (currentPlaceGuess == currentPlaceTargetNumber) {
                 scoreData.setStrike(scoreData.getStrike() + 1);
-            } else if (this.targetNumbers.getAllTargetNumbers()
-                    .stream()
-                    .filter(n -> n == userInputs.get(i))
-                    .count()
-                    == 1) {
+                continue;
+            }
+            if (this.targetNumbers.stream().filter(x -> x == currentPlaceGuess).count() != 0) {
                 scoreData.setBall(scoreData.getBall() + 1);
             }
         }

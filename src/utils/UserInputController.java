@@ -1,9 +1,6 @@
 package utils;
 
-import baseball.DTO.ScoreData;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -22,7 +19,7 @@ public class UserInputController {
         }
     }
 
-    public boolean askUserRestartGame(int yesInt, int noInt) {
+    public boolean askUserRestartGame() {
         boolean boolVariable = false;
         String userInput = askForIntegerInput();
 
@@ -32,15 +29,15 @@ public class UserInputController {
 
         int userIntegerInput = Integer.parseInt(userInput);
 
-        if (userIntegerInput != yesInt && userIntegerInput != noInt) {
+        if (userIntegerInput != 1 && userIntegerInput != 2) {
             throw new IllegalArgumentException();
         }
 
-        if (userIntegerInput == yesInt) {
+        if (userIntegerInput == 1) {
             boolVariable = true;
         }
 
-        if (userIntegerInput == noInt) {
+        if (userIntegerInput == 2) {
             boolVariable = false;
         }
 
@@ -57,10 +54,7 @@ public class UserInputController {
                 .mapToObj(Character::getNumericValue)
                 .collect(Collectors.toCollection(ArrayList::new));
         for (Integer guess : guesses) {
-            if (!isValidRange(1, 9, guess)) {
-                throw new IllegalArgumentException();
-            }
-            if (!isNotDuplicate(guess, guesses)) {
+            if (!isValidRange(1, 9, guess) || !isNotDuplicate(guess, guesses)) {
                 throw new IllegalArgumentException();
             }
         }

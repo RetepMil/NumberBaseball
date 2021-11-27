@@ -1,4 +1,4 @@
-package baseball.DTO;
+package baseball;
 
 public class ScoreData {
     private int strike;
