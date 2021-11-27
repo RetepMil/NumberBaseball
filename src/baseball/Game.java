@@ -38,17 +38,19 @@ public class Game {
     private ScoreData calculateScore(ArrayList<Integer> guesses) {
         ScoreData scoreData = new ScoreData(0, 0);
         for (int i = 0; i < this.size; i++) {
-            final int currentPlaceGuess = guesses.get(i);
-            final int currentPlaceTargetNumber = this.targetNumbers.get(i);
-            if (currentPlaceGuess == currentPlaceTargetNumber) {
-                scoreData.setStrike(scoreData.getStrike() + 1);
-                continue;
-            }
-            if (this.targetNumbers.stream().filter(x -> x == currentPlaceGuess).count() != 0) {
-                scoreData.setBall(scoreData.getBall() + 1);
-            }
+            applyGuessToScoreData(guesses.get(i), this.targetNumbers.get(i), scoreData);
         }
         return scoreData;
+    }
+
+    private void applyGuessToScoreData(int currentPlaceGuess, int currentPlaceTargetNumber, ScoreData scoreData) {
+        if (currentPlaceGuess == currentPlaceTargetNumber) {
+            scoreData.setStrike(scoreData.getStrike() + 1);
+            return;
+        }
+        if (this.targetNumbers.stream().filter(x -> x == currentPlaceGuess).count() != 0) {
+            scoreData.setBall(scoreData.getBall() + 1);
+        }
     }
 
     private void gameProcess() {
