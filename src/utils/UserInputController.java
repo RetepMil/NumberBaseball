@@ -56,16 +56,12 @@ public class UserInputController {
         ArrayList<Integer> guesses = userInput.chars()
                 .mapToObj(Character::getNumericValue)
                 .collect(Collectors.toCollection(ArrayList::new));
-        for (int i = 0; i < size; i++) {
-            try {
-                int guess = askUniqueInteger(1, 9, guesses);
-                guesses.add(guess);
-            } catch (IllegalArgumentException e) {
-                System.out.print("비정상적인 입력");
-                System.exit(0);
-            } catch (Exception e) {
-                System.out.print(e.getMessage());
-                System.exit(0);
+        for (Integer guess : guesses) {
+            if (!isValidRange(1, 9, guess)) {
+                throw new IllegalArgumentException();
+            }
+            if (!isNotDuplicate(guess, guesses)) {
+                throw new IllegalArgumentException();
             }
         }
         return guesses;
@@ -79,7 +75,11 @@ public class UserInputController {
         return digitSize == stringIntegerInput.length();
     }
 
-    private int isValidRange(int inclusive_lb, int inclusive_ub) {
+    private boolean isValidRange(int inclusive_lb, int inclusive_ub, int integer) {
+        return integer >= 1 && integer <= 9;
+    }
 
+    private boolean isNotDuplicate(int integer, ArrayList<Integer> integerList) {
+        return integerList.stream().filter(i -> i == integer).count() == 1;
     }
 }
