@@ -26,17 +26,17 @@ public class ScoreData {
     }
 
     public String getHintString() {
-        String hint = "";
+        String hintString = "";
         if (ball > 0) {
-            hint += ball + "볼 ";
+            hintString += ball + "볼 ";
         }
         if (strike > 0) {
-            hint += strike + "스트라이크 ";
+            hintString += strike + "스트라이크 ";
         }
         if (ball == 0 && strike == 0)
-            hint += "낫싱";
+            hintString += "낫싱";
 
-        return hint;
+        return hintString;
     }
 
     public boolean isWin(int size) {
